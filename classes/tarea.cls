@@ -24,7 +24,7 @@
 \RequirePackage{needspace} % needspace for dynamic line breaking
 \RequirePackage{hyperref} % for pdf bookmarks, other information and org-mode
 \RequirePackage{ifthen}
-\RequirePackage{fancyhdr}
+% \RequirePackage{fancyhdr}
 \RequirePackage{math-environments}
 \RequirePackage{subfiles}
 
@@ -51,21 +51,21 @@
 \newcommand{\profesor}[1]{\gdef\@profesor{#1}}
 \newcommand{\ayudante}[1]{\gdef\@ayudante{#1}}
 
-\fancypagestyle{firstpagestyle}
-{
-   \fancyhf{}
-   \renewcommand{\headrulewidth}{0pt}
-   \fancyfoot[R]{\footnotesize \thepage}
-}
-\fancypagestyle{generalpagestyle}
-{
-   \fancyhf{}
-   \renewcommand{\headrulewidth}{.5pt}
-   \fancyhead[L]{\footnotesize \@title}
-   \fancyhead[R]{\footnotesize \@class}
-   \fancyfoot[R]{\thepage}
-}
-\pagestyle{generalpagestyle}
+% \fancypagestyle{firstpagestyle}
+% {
+%    \fancyhf{}
+%    \renewcommand{\headrulewidth}{0pt}
+%    \fancyfoot[R]{\footnotesize \thepage}
+% }
+% \fancypagestyle{generalpagestyle}
+% {
+%    \fancyhf{}
+%    \renewcommand{\headrulewidth}{.5pt}
+%    \fancyhead[L]{\footnotesize \@title}
+%    \fancyhead[R]{\footnotesize \@class}
+%    \fancyfoot[R]{\thepage}
+% }
+% \pagestyle{generalpagestyle}
 
 \renewcommand{\maketitle} {
   % Left side
@@ -89,10 +89,10 @@
   \begin{center}
     \Large\textbf{\@title}
   \end{center}
-  \vspace*{-6ex}
-  \listofpreguntas
-  \thispagestyle{firstpagestyle}
-  \vspace*{1ex}
+  % \vspace*{-6ex}
+  % \listofpreguntas
+  % \thispagestyle{firstpagestyle}
+  \vspace*{1em}
 }
 
 
