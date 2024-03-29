@@ -1,33 +1,33 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{ayudantia}[2023/01/01 Ayudantia]
 
+\RequirePackage{etoolbox}
+
 % --------- class options ---------
 % variables
-\def\ayudantia@pagesize{letterpaper}
+\newtoggle{ayudantia@print}
 
-% page size (default: letterpaper)
-\DeclareOption{letterpaper}{\def\ayudantia@pagesize{letterpaper}}
-\DeclareOption{legalpaper}{\def\ayudantia@pagesize{legalpaper}}
+% Print Mode
+\DeclareOption{print}{
+  \PassOptionsToClass{10pt}{base}
+  \toggletrue{ayudantia@print}
+  \toggletrue{ayudantia@toc}
+}
 
-% pass undeclared options to article
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+% pass undeclared options to base class
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{base}}
 
 \ProcessOptions\relax
-\LoadClass[]{article}
+\LoadClass{base}
 
 
-\RequirePackage[spanish]{babel}
-
-% Font
-\RequirePackage{lmodern}
-\RequirePackage[T1]{fontenc}
+% --------- package loading ---------
+% Custom packages
+\RequirePackage[\iftoggle{ayudantia@print}{bw}{}]{math-environments}
 
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{mathtools}
 
-\usepackage{math-environments}
-
-\RequirePackage[margin=2.5cm,paper=\ayudantia@pagesize]{geometry}
 \RequirePackage{varwidth}
 \RequirePackage{graphicx}
 \RequirePackage{enumitem}
@@ -76,6 +76,7 @@
 
 
 \renewcommand{\maketitle} {
+  \noindent
   \begin{varwidth}{0.4\textwidth}
     \includegraphics[width=2cm]{images/logo-uc.png}
   \end{varwidth}
