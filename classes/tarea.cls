@@ -1,36 +1,47 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{tarea}[2023/01/01 Tarea]
-\def\hw@papersize{letterpaper}
-\DeclareOption{letterpaper}{\def\hw@papersize{letterpaper}}
-\DeclareOption{legalpaper}{\def\hw@papersize{legalpaper}}
-\def\hw@ptsize{12pt} % https://tex.stackexchange.com/a/634138/215221
-\DeclareOption{10pt}{\def\hw@ptsize{10pt}}
-\DeclareOption{11pt}{\def\hw@ptsize{11pt}}
-\DeclareOption{12pt}{\def\hw@ptsize{12pt}}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProvidesClass{tarea}[2023/01/01 Clase para tareas]
+
+\RequirePackage{etoolbox}
+
+% --------- class options ---------
+% variables
+\newtoggle{tarea@print}
+
+% Print Mode
+\DeclareOption{print}{
+  \PassOptionsToClass{10pt}{base}
+  \toggletrue{tarea@print}
+  \toggletrue{tarea@toc}
+}
+
+% pass undeclared options to base class
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{base}}
+
 \ProcessOptions\relax
-\LoadClass[\hw@papersize, \hw@ptsize]{article}
-\RequirePackage[margin=1in]{geometry}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[spanish]{babel}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{lmodern}
+\LoadClass{base}
+
+
+% --------- package loading ---------
+\RequirePackage{xstring}
+
+% Custom packages
+\RequirePackage[\iftoggle{tarea@print}{bw}{}]{math-environments}
 
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{mathtools}
 \RequirePackage{cancel}
 
+\RequirePackage{varwidth}
+\RequirePackage{hyperref}
 \RequirePackage{enumitem}
-\RequirePackage{needspace} % needspace for dynamic line breaking
-\RequirePackage{hyperref} % for pdf bookmarks, other information and org-mode
-\RequirePackage{ifthen}
-% \RequirePackage{fancyhdr}
-\RequirePackage{math-environments}
+
 \RequirePackage{subfiles}
 
 \hypersetup {
   pdfstartview=FitH,
-  colorlinks=false
+  colorlinks=\iftoggle{tarea@print}{false}{true},
+  citecolor=blue,
+  linkcolor=blue
 }
 
 \AtBeginDocument{
@@ -51,47 +62,28 @@
 \newcommand{\profesor}[1]{\gdef\@profesor{#1}}
 \newcommand{\ayudante}[1]{\gdef\@ayudante{#1}}
 
-% \fancypagestyle{firstpagestyle}
-% {
-%    \fancyhf{}
-%    \renewcommand{\headrulewidth}{0pt}
-%    \fancyfoot[R]{\footnotesize \thepage}
-% }
-% \fancypagestyle{generalpagestyle}
-% {
-%    \fancyhf{}
-%    \renewcommand{\headrulewidth}{.5pt}
-%    \fancyhead[L]{\footnotesize \@title}
-%    \fancyhead[R]{\footnotesize \@class}
-%    \fancyfoot[R]{\thepage}
-% }
-% \pagestyle{generalpagestyle}
 
 \renewcommand{\maketitle} {
   % Left side
   \noindent
-  \begin{minipage}{.6\linewidth}
-    \noindent\ifthenelse{\equal{\@class}{\empty}}{}{\textbf{\@class}\par}
-    \noindent\ifthenelse{\equal{\@profesor}{\empty}}{}{\textbf{Profesor:} \@profesor\par}
-    \noindent\ifthenelse{\equal{\@ayudante}{\empty}}{}{\textbf{Ayudante:} \@ayudante\par}
-    \vfill
-  \end{minipage}
+  \begin{varwidth}{.45\linewidth}
+    \IfStrEq{\@class}{}{}{\textbf{\@class}\par}
+    \IfStrEq{\@profesor}{}{}{\textbf{Profesor:} \@profesor\par}
+    \IfStrEq{\@ayudante}{}{}{\textbf{Ayudante:} \@ayudante\par}
+  \end{varwidth}
   \hfill
   % Right side
-  \begin{minipage}{.3\linewidth}
+  \begin{varwidth}{.45\linewidth}
     \begin{flushright}
-      \noindent\ifthenelse{\equal{\@author}{\empty}}{}{\@author\par}
+      \noindent\IfStrEq{\@author}{}{}{\@author\par}
       \noindent\@date\par
     \end{flushright}
-    \vfill
-  \end{minipage}
-  \vspace*{1ex}
+  \end{varwidth}
+
+  \vspace*{1em}
   \begin{center}
     \Large\textbf{\@title}
   \end{center}
-  % \vspace*{-6ex}
-  % \listofpreguntas
-  % \thispagestyle{firstpagestyle}
   \vspace*{1em}
 }
 

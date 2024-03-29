@@ -1,13 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{apuntes}[2024/01/28 Apuntes]
+\ProvidesClass{apuntes}[2024/01/01 Clase para apuntes]
 
 \RequirePackage{etoolbox}
 
 % --------- class options ---------
 % variables
-\def\apuntes@ptsize{12pt}
-\def\apuntes@pagesize{letterpaper}
-\def\apuntes@font{LatinModern}
 \newtoggle{apuntes@print}
 \newtoggle{apuntes@toc}
 \newtoggle{apuntes@clases}
@@ -15,70 +12,32 @@
 
 % Print Mode
 \DeclareOption{print}{
-  \def\apuntes@ptsize{10pt}
+  \PassOptionsToClass{10pt}{base}
   \toggletrue{apuntes@print}
   \toggletrue{apuntes@toc}
 }
-
-% font size (default: 12pt)
-\DeclareOption{10pt}{\def\apuntes@ptsize{10pt}}
-\DeclareOption{11pt}{\def\apuntes@ptsize{11pt}}
-\DeclareOption{12pt}{\def\apuntes@ptsize{12pt}}
-
-% font (default: lmodern)
-\DeclareOption{lmodern}{\def\apuntes@font{LatinModern}}
-\DeclareOption{charter}{\def\apuntes@font{CharterBT}}
-\DeclareOption{libertine}{\def\apuntes@font{Libertine}}
-\DeclareOption{cmbright}{\def\apuntes@font{ComputerModernBright}}
-
-% page size (default: letterpaper)
-\DeclareOption{letterpaper}{\def\apuntes@pagesize{letterpaper}}
-\DeclareOption{legalpaper}{\def\apuntes@pagesize{legalpaper}}
 
 % include lists of contents
 \DeclareOption{toc}{\toggletrue{apuntes@toc}}
 \DeclareOption{clases}{\toggletrue{apuntes@clases}}
 \DeclareOption{todo}{\toggletrue{apuntes@todo}}
 
-% pass undeclared options to article
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+% pass undeclared options to base class
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{base}}
 
 \ProcessOptions\relax
-\LoadClass[\apuntes@ptsize]{article}
+\LoadClass{base}
 
-\RequirePackage[spanish]{babel}
-
+% --------- package loading ---------
 \RequirePackage{xstring}
 
 % Custom packages
 \RequirePackage[\iftoggle{apuntes@print}{bw}{}]{math-environments}
 \RequirePackage[\iftoggle{apuntes@print}{invisible}{}]{fancy-dates}
 
-% Font
-\IfStrEqCase{\apuntes@font}{
-  {LatinModern}{
-    \RequirePackage{lmodern}
-    \RequirePackage[T1]{fontenc}
-  }
-  {CharterBT}{
-    \RequirePackage[bitstream-charter]{mathdesign}
-    \RequirePackage[T1]{fontenc}
-  }
-  {Libertine}{
-    \RequirePackage{libertine}
-    \RequirePackage{libertinust1math}
-    \RequirePackage[T1]{fontenc}
-  }
-  {ComputerModernBright}{
-    \RequirePackage{cmbright}
-    \RequirePackage[OT1]{fontenc}
-  }
-}
-
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{mathtools}
 
-\RequirePackage[margin=1in,paper=\apuntes@pagesize]{geometry}
 \RequirePackage{varwidth}
 \RequirePackage{calc}
 \RequirePackage{hyperref}
