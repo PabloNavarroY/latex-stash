@@ -35,9 +35,6 @@
 \RequirePackage[\iftoggle{apuntes@print}{bw}{}]{math-environments}
 \RequirePackage[\iftoggle{apuntes@print}{invisible}{}]{fancy-dates}
 
-\RequirePackage{amsmath,amssymb,amsthm}
-\RequirePackage{mathtools}
-
 \RequirePackage{varwidth}
 \RequirePackage{calc}
 \RequirePackage{hyperref}
