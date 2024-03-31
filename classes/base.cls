@@ -7,7 +7,7 @@
 % variables
 \def\base@ptsize{12pt}
 \def\base@pagesize{letterpaper}
-\def\base@font{LatinModern}
+\def\base@font{Libertinus}
 
 % font size (default: 12pt)
 \DeclareOption{10pt}{\def\base@ptsize{10pt}}
