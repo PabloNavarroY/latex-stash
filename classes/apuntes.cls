@@ -26,7 +26,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{base}}
 
 \ProcessOptions\relax
-\LoadClass{base}
+\LoadClass[twoside]{base}
 
 % --------- package loading ---------
 \RequirePackage{xstring}
@@ -39,7 +39,7 @@
 \RequirePackage{calc}
 \RequirePackage{hyperref}
 \RequirePackage{enumitem}
-% \RequirePackage{fancyhdr}
+\RequirePackage{fancyhdr}
 % \RequirePackage{needspace} % needspace for dynamic line breaking
 \RequirePackage{tikz}
 \usetikzlibrary{calc}
@@ -81,29 +81,21 @@
 \newcommand{\emailayudante}[1]{\gdef\@emailayudante{#1}}
 
 
-% \fancypagestyle{firstpagestyle}
-% {
-% \fancyhf{}
-% \renewcommand{\headrulewidth}{0pt}
-% }
-%   \fancypagestyle{generalpagestyle}
-%   {
-%   \fancyhf{}
-%   \renewcommand{\headrulewidth}{.5pt}
-%   \fancyhead[L]{\footnotesize \@class\ - \@title}
-%   \fancyhead[R]{\footnotesize \@author}
-%   \fancyfoot[R]{\thepage}
-% }
-%   \pagestyle{generalpagestyle}
+\fancypagestyle{generalpagestyle}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{.5pt}
+  \fancyhead[OR,EL]{\thepage}
+  \fancyhead[ER]{\footnotesize \@class\ - \@title}
+  \fancyhead[OL]{\footnotesize \@author}
+}
+\pagestyle{generalpagestyle}
 
 \newcommand{\titleformat}[1]{\textbf{\Large{#1}}}
 \newcommand{\siglaformat}[1]{\textbf{\scriptsize{#1}}}
 \newcommand{\authorformat}[1]{\textsc{\normalsize{#1}}}
 \newcommand{\dateformat}[1]{\small{#1}}
 \renewcommand{\maketitle} {
-  % \thispagestyle{firstpagestyle}
   \begin{center}
-    % \titleformat{\@title}
     \begin{tikzpicture}
       % Título y sigla
       \node at (0,0) (T) {\titleformat{\@title}};
@@ -114,8 +106,6 @@
       \n2 = {veclen(\p2)}
       in
       [thick] (-\n2,\n1) -- (\n2,\n1) node (S) [midway, fill=white]{\siglaformat{\@class}};
-      % % Autor
-      % \node at ($(S.south) - (0,.2)$) (A) {\authorformat{\@author}};
     \end{tikzpicture}
     \par\vspace*{-.5ex}
     \authorformat{\@author}
