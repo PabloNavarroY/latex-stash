@@ -95,6 +95,7 @@
 \newcommand{\authorformat}[1]{\textsc{\normalsize{#1}}}
 \newcommand{\dateformat}[1]{\small{#1}}
 \renewcommand{\maketitle} {
+  \thispagestyle{plain}
   \begin{center}
     \begin{tikzpicture}
       % Título y sigla

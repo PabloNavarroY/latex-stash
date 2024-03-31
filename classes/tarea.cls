@@ -11,14 +11,13 @@
 \DeclareOption{print}{
   \PassOptionsToClass{10pt}{base}
   \toggletrue{tarea@print}
-  \toggletrue{tarea@toc}
 }
 
 % pass undeclared options to base class
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{base}}
 
 \ProcessOptions\relax
-\LoadClass{base}
+\LoadClass[twoside]{base}
 
 
 % --------- package loading ---------
@@ -31,6 +30,7 @@
 \RequirePackage{mathtools}
 \RequirePackage{cancel}
 
+\RequirePackage{fancyhdr}
 \RequirePackage{varwidth}
 \RequirePackage{hyperref}
 \RequirePackage{enumitem}
@@ -53,6 +53,15 @@
 }
 
 
+\fancypagestyle{generalpagestyle}{
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{.5pt}
+  \fancyhead[OR,EL]{\thepage}
+  \fancyhead[ER]{\footnotesize \@title}
+  \fancyhead[OL]{\footnotesize \@class}
+}
+\pagestyle{generalpagestyle}
+
 \gdef\@author{\empty}
 \gdef\@class{\empty}
 \gdef\@profesor{\empty}
@@ -64,6 +73,7 @@
 
 
 \renewcommand{\maketitle} {
+  \thispagestyle{plain}
   % Left side
   \noindent
   \begin{varwidth}{.45\linewidth}
