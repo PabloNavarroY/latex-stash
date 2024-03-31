@@ -17,7 +17,7 @@
 % font (default: lmodern)
 \DeclareOption{lmodern}{\def\base@font{LatinModern}}
 \DeclareOption{charter}{\def\base@font{CharterBT}}
-\DeclareOption{libertine}{\def\base@font{Libertine}}
+\DeclareOption{libertinus}{\def\base@font{Libertinus}}
 \DeclareOption{cmbright}{\def\base@font{ComputerModernBright}}
 
 % page size (default: letterpaper)
@@ -42,13 +42,13 @@
     \RequirePackage{lmodern}
     \RequirePackage[T1]{fontenc}
   }
-  {CharterBT}{
-    \RequirePackage[bitstream-charter]{mathdesign}
+  {Libertinus}{
+    \RequirePackage{libertinus}
+    \RequirePackage{libertinust1math}
     \RequirePackage[T1]{fontenc}
   }
-  {Libertine}{
-    \RequirePackage{libertine}
-    \RequirePackage{libertinust1math}
+  {CharterBT}{
+    \RequirePackage[bitstream-charter]{mathdesign}
     \RequirePackage[T1]{fontenc}
   }
   {ComputerModernBright}{
