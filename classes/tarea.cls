@@ -24,7 +24,7 @@
 \RequirePackage{xstring}
 
 % Custom packages
-\RequirePackage[\iftoggle{tarea@print}{bw}{}]{math-environments}
+\RequirePackage[tarea,\iftoggle{tarea@print}{bw}{}]{math-environments}
 
 \RequirePackage{amsmath,amssymb,amsthm}
 \RequirePackage{mathtools}
@@ -90,11 +90,11 @@
     \end{flushright}
   \end{varwidth}
 
-  \vspace*{1em}
+  \vspace*{1ex}
   \begin{center}
     \Large\textbf{\@title}
   \end{center}
-  \vspace*{1em}
+  \vspace*{1ex}
 }
 
 
