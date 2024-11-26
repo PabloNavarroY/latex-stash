@@ -57,4 +57,9 @@
   }
 }
 
-\RequirePackage[margin=1in,paper=\base@pagesize]{geometry}
+\RequirePackage[
+  margin=1.5cm,
+  tmargin=2.3cm,
+  headheight=15pt,
+  paper=\base@pagesize,
+]{geometry}
