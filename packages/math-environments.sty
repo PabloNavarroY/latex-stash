@@ -165,15 +165,20 @@
     after skip={0mm},
     breakable,
     pad at break=0mm,
-    % overlay unbroken={
-    %   \fill[tcbcoltitle] (interior.south east) -- +(-.3,0) -- +(0,.3) -- cycle;
-    % },
-    % overlay last={
-    %   \fill[tcbcoltitle] (interior.south east) -- +(-.3,0) -- +(0,.3) -- cycle;
-    % },
   }{preg}
 }
-\newenvironmentx{pregunta}[2][1,2]{\begin{Pregunta}{#1}{#2}}{\end{Pregunta}}
+\newcounter{QuestionCounter}
+\newenvironmentx{pregunta}[2][1,2]{
+  \nottoggle{@tarea}{}{
+    \newpage
+    \phantomsection
+    \stepcounter{QuestionCounter}
+    \addcontentsline{toc}{section}{Pregunta \arabic{QuestionCounter}}
+  }
+  \begin{Pregunta}{#1}{#2}
+}{
+  \end{Pregunta}
+}
 
 % Observación
 \newtexttheorem[number within=section, Crefname={Observación}{Observaciones}, crefname={observación}{observaciones}]{Obs}{Observación}{Brown2}{obs}

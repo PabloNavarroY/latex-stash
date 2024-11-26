@@ -74,6 +74,10 @@
 
 \renewcommand{\maketitle} {
   \thispagestyle{plain}
+  \newgeometry{
+    margin=1.5cm,
+    bmargin=2.3cm,
+  }
   % Left side
   \noindent
   \begin{varwidth}{.45\linewidth}
@@ -87,6 +91,7 @@
     \begin{flushright}
       \noindent\IfStrEq{\@author}{}{}{\@author\par}
       \noindent\@date\par
+      \hfill
     \end{flushright}
   \end{varwidth}
 
@@ -94,7 +99,9 @@
   \begin{center}
     \Large\textbf{\@title}
   \end{center}
-  \vspace*{1ex}
+  % \vspace*{1ex}
+  \tableofcontents
+  \restoregeometry
 }
 
 
