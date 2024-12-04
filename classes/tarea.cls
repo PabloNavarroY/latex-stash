@@ -75,8 +75,8 @@
 \renewcommand{\maketitle} {
   \thispagestyle{plain}
   \newgeometry{
-    margin=1.5cm,
-    bmargin=2.3cm,
+    margin=2cm,
+    tmargin=1.6cm,
   }
   % Left side
   \noindent
