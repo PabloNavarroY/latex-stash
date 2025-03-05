@@ -26,7 +26,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{base}}
 
 \ProcessOptions\relax
-\LoadClass[twoside]{base}
+\LoadClass{base}
 
 % --------- package loading ---------
 \RequirePackage{xstring}
@@ -35,15 +35,19 @@
 \RequirePackage[\iftoggle{apuntes@print}{bw}{}]{math-environments}
 \RequirePackage[\iftoggle{apuntes@print}{invisible}{}]{fancy-dates}
 
+\RequirePackage{geometry}
 \RequirePackage{varwidth}
-\RequirePackage{calc}
 \RequirePackage{hyperref}
 \RequirePackage{enumitem}
 \RequirePackage{fancyhdr}
-% \RequirePackage{needspace} % needspace for dynamic line breaking
 \RequirePackage{tikz}
+\RequirePackage{calc}
 \usetikzlibrary{calc}
 \RequirePackage{tikz-cd}
+
+% Figure magic
+% \usepackage{graphicx,wrapfig,float,caption}
+% \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 
 % todo notes
 \RequirePackage[\iftoggle{apuntes@todo}{status=draft}{}]{fixme}
@@ -51,11 +55,19 @@
 
 \RequirePackage{subfiles}
 
+% Hyperref options
 \hypersetup {
   pdfstartview=FitH,
   colorlinks=\iftoggle{apuntes@print}{false}{true},
   citecolor=blue,
-  linkcolor=blue
+  linkcolor=blue,
+  urlcolor=blue,
+  anchorcolor=blue,
+  citecolor=blue,
+  filecolor=blue,
+  linkcolor=blue,
+  menucolor=blue,
+  linktocpage=true,
 }
 
 \AtBeginDocument{
@@ -66,7 +78,21 @@
   }
 }
 
+\geometry{
+  % margin=1in,
+  paper=\base@pagesize,
+  marginparsep=.02\paperwidth,
+  marginparwidth=.2\paperwidth,
+  inner=.11\paperwidth,
+  voffset=-1in,
+  headheight=.02\paperheight,
+  headsep=.03\paperheight,
+  footskip=20pt,
+  textheight=.795\paperheight,
+  textwidth=.62\paperwidth
+}
 
+% Class parameters
 \gdef\@author{}
 \gdef\@class{}
 \gdef\@profesor{}
@@ -80,33 +106,117 @@
 \newcommand{\ayudante}[1]{\gdef\@ayudante{#1}}
 \newcommand{\emailayudante}[1]{\gdef\@emailayudante{#1}}
 
+% -------------------------------- Page style ---------------------------------
+% \fancypagestyle{generalpagestyle}{
+%   \fancyhf{}
+%   \renewcommand{\headrulewidth}{.5pt}
+%   \fancyhead[OR,EL]{\thepage}
+%   \fancyhead[ER]{\footnotesize \@class\ - \@title}
+%   \fancyhead[OL]{\footnotesize \@author}
+% }
+% \pagestyle{generalpagestyle}
 
-\fancypagestyle{generalpagestyle}{
+\newlength{\myoddoffset}
+\setlength{\myoddoffset}{\marginparwidth + \marginparsep}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}{}}
+
+% General page style
+\fancypagestyle{fancynotes}{
   \fancyhf{}
-  \renewcommand{\headrulewidth}{.5pt}
-  \fancyhead[OR,EL]{\thepage}
-  \fancyhead[ER]{\footnotesize \@class\ - \@title}
-  \fancyhead[OL]{\footnotesize \@author}
+  \fancyheadoffset[rh]{\myoddoffset}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyhead[L]{\textsc{\leftmark}}
+  \fancyhead[R]{\footnotesize \textit{\rightmark} \thepage}
 }
-\pagestyle{generalpagestyle}
 
+% Page style for part pages
+\fancypagestyle{fancypart}{
+  \fancyhf{}
+  \fancyfootoffset[rh]{\myoddoffset}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[L]{\footnotesize \thepage}
+}
+
+% Page layout
+% FIXME: Revisar todas estas cosas
+\renewcommand{\baselinestretch}{1.0}\normalsize
+\setlength\lineskip{1\p@}
+\setlength\parindent{1.2\parindent}
+\setlength\normallineskip{1\p@}
+\setlength\parskip{0\p@ \@plus \p@}
+\@lowpenalty   51
+\@medpenalty  151
+\@highpenalty 301
+\widowpenalty 1000
+\clubpenalty 1000
+
+\setcounter{topnumber}{4}
+\renewcommand\topfraction{1}
+\setcounter{bottomnumber}{1}
+\renewcommand\bottomfraction{.6}
+\setcounter{totalnumber}{5}
+\renewcommand\textfraction{0}
+\renewcommand\floatpagefraction{1}
+\addtolength\textheight{\topskip}
+
+\marginparpush 6\p@
+\topmargin   .05\paperheight
+
+\setlength\arraycolsep{2\p@}
+\setlength\tabcolsep{6\p@}
+\setlength\arrayrulewidth{.4\p@}
+\setlength\doublerulesep{2\p@}
+\setlength\tabbingsep{\labelsep}
+\skip\@mpfootins = \skip\footins
+\setlength\fboxsep{3\p@}
+\setlength\fboxrule{.4\p@}
+
+% No dots in the table of contents
+\renewcommand{\@dotsep}{10000}
+
+% Footer and header of the body
+% the command ``\pagestyle{myplain}'' must be inserted
+% just after ``\begin{document}''
+
+% FIXME:
+\newcommand\ps@myplain{
+\pagenumbering{arabic}
+\renewcommand\@oddfoot{\hfill-- \thepage\ --\hfill}
+\renewcommand\@oddhead{}}
+\let\ps@plain=\ps@myplain
+
+% no header or footer in the title page
+\newcommand\ps@titlepage{\renewcommand\@oddfoot{}\renewcommand\@oddhead{}}
+
+% ----------------------------- Title page format ------------------------------
 \newcommand{\titleformat}[1]{\textbf{\Large{#1}}}
 \newcommand{\siglaformat}[1]{\textbf{\scriptsize{#1}}}
 \newcommand{\authorformat}[1]{\textsc{\normalsize{#1}}}
 \newcommand{\dateformat}[1]{\small{#1}}
+
 \renewcommand{\maketitle} {
-  \thispagestyle{plain}
+  \pagestyle{empty}
+  \thispagestyle{titlepage}
+  \newgeometry{
+    marginparwidth=0pt,
+    marginparsep=0pt,
+    textwidth=.8\paperwidth,
+    hoffset=0in,
+    voffset=0in
+  }
+  \setcounter{page}{0}
   \begin{center}
     \begin{tikzpicture}
       % Título y sigla
       \node at (0,0) (T) {\titleformat{\@title}};
       \draw let
-      \p1 = ($(T.south) - (0,.1)$),
-      \n1 = {-veclen(\p1)},
-      \p2 = ($0.6*(T.east)$),
-      \n2 = {veclen(\p2)}
+        \p1 = ($(T.south) - (0,.1)$),
+        \n1 = {-veclen(\p1)},
+        \p2 = ($0.6*(T.east)$),
+        \n2 = {veclen(\p2)}
       in
-      [thick] (-\n2,\n1) -- (\n2,\n1) node (S) [midway, fill=white]{\siglaformat{\@class}};
+        [thick] (-\n2,\n1) -- (\n2,\n1) node (S) [midway, fill=white] {\siglaformat{\@class}};
     \end{tikzpicture}
     \par\vspace*{-.5ex}
     \authorformat{\@author}
@@ -133,9 +243,12 @@
     }
   \end{center}
 
+  \newpage
+  \pagestyle{myplain}
+  \pagenumbering{roman}
   % Lists of contents
   \iftoggle{apuntes@toc}{
-    \vspace*{-1em}
+    % \vspace*{-1em}
     \tableofcontents
   }{}
   \iftoggle{apuntes@clases}{
@@ -147,6 +260,13 @@
     \listoffixmes
   }{}
   \newpage
+  \setcounter{footnote}{0}
+  \restoregeometry
+  \pagestyle{myplain}
+  % \pagenumbering{arabic}
+
+  % \newpage
+  \pagestyle{fancynotes}
 }
 
 
